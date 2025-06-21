@@ -44,6 +44,17 @@ const getOrder = async (req,res) => {
         
     }
 }
+const getAllOrder = async (req,res) => { 
+      try {         
+        
+        const order =  await Order.find().populate("products.product").populate("user")
+        console.log(order);
+        res.status(200).json(order)
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
 
 const deleteOrder = async (req,res) => {
     try {
@@ -91,4 +102,4 @@ const getOrderUser = async (req,res) => {
         console.log(error);
     }
 }
-module.exports ={updateStatus, deleteOrder,getOrder, order,getOrderUser}
+module.exports ={updateStatus, getAllOrder,deleteOrder,getOrder, order,getOrderUser}

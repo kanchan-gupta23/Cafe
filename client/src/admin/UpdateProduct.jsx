@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../Context/Context";
 
 function UpdateProduct() {
+  const navigate = useNavigate();
   const { Authentication } = useContext(Context);
   const params = useParams();
   const [value, setValue] = useState({
@@ -37,9 +38,16 @@ function UpdateProduct() {
     try {
       const response = await axios.put(
         `http://localhost:3000/product/updateProduct/${params.id}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: Authentication,
+          },
+        }
       );
       console.log(response.data);
+      alert("product updated successfully");
+      navigate(-1);
     } catch (error) {
       console.log(error);
     }

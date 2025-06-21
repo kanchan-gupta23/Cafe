@@ -20,18 +20,20 @@ import AdminLogin from "./admin/AdminLogin";
 import Profile from "./Components/Profile";
 import AdminPage from "./admin/AdminPage";
 import { Context } from "./Context/Context";
+import AllBookings from "./Components/booking/AllBookings";
+import GetAllOrder from "./Components/order/AllOrder";
 
 function App() {
   const { isAuthenticated } = useContext(Context);
+  console.log(isAuthenticated);
+
   return (
     <div className="w-screen h-screen bg-zinc-800">
       <BrowserRouter>
         <Routes>
           <Route
             path="/"
-            element={
-              isAuthenticated ? <Home /> : <Navigate to="/userRegistration" />
-            }
+            element={isAuthenticated == true ? <Home /> : <Registration />}
           />
           <Route
             path="/ProductsByCategory/:category"
@@ -46,8 +48,10 @@ function App() {
           <Route path="/UpdateProduct/:id" element={<UpdateProduct />} />
           <Route path="/getProductById/:id" element={<ProductById />} />
           <Route path="/allOrder/:userId" element={<GetOrder />} />
+          <Route path="/getallOrder" element={<GetAllOrder />} />
           <Route path="/booking/:userId" element={<Booking />} />
           <Route path="/mybooking/:userId" element={<MyBookings />} />
+          <Route path="/allBookings" element={<AllBookings />} />
           <Route path="/order/:userId" element={<Order />} />
           <Route path="/cart/:userId" element={<Cart />} />
           <Route path="/admin" element={<Admin />} />

@@ -10,6 +10,7 @@ const cart = require("./Router/cartRouter")
 const cors = require("cors")
 const order = require("./Router/orderRouter")
 const payment = require("./Router/paymentRouter")
+const mongoose = require("mongoose")
 
 const app = express()
 const CorsMethods = {
@@ -45,3 +46,15 @@ connection().then(()=>
         
     })
 ))
+
+mongoose.connection.once('open', async () => {
+    try {
+      await mongoose.connection.db
+        .collection('carts')
+        .dropIndex('products.product_1'); // Name may vary, check via db.carts.getIndexes()
+      console.log('✅ Dropped invalid unique index on products.product');
+    } catch (err) {
+      if (err.codeName === 'IndexNotFound') console.log('✅ No index to drop');
+      else console.error('❌ Error dropping index:', err);
+    }
+  });

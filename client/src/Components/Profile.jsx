@@ -9,7 +9,14 @@ function Profile() {
     <div className="min-h-screen bg-gradient-to-br from-[#fdf6f0] to-[#f2e0d4] flex items-center justify-center p-6">
       <div className="bg-white/80 backdrop-blur-xl border border-[#e6d4c1] rounded-3xl shadow-2xl p-10 w-full max-w-md">
         <div className="flex flex-col items-center">
-          <FaUserCircle size={80} className="text-[#6f4e37] mb-4" />
+          {user.attachments?.url ? (
+            <img
+              className="text-[#6f4e37] mb-4 h-[16vh] w-[16vh] rounded-full border-2 border-[#6f4e37] "
+              src={user.attachments?.url}
+            />
+          ) : (
+            <FaUserCircle className="text-[#6f4e37] h-[16vh] w-[16vh] mb-4" />
+          )}
           <h1 className="text-3xl font-bold text-[#5c4033]">
             Welcome, {user?.username || "Guest"}!
           </h1>

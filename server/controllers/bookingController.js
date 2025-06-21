@@ -12,6 +12,19 @@ const booking = async (req, res) => {
     }
 }
 
+const getAllBooking = async (req, res) => {
+  try {
+const {userId} = req.params
+console.log(userId);
+
+      const booking = await Booking.find().populate("user")
+      res.status(200).json({booking,msg:"All bookings successfully"})
+  } catch (error) {
+      console.log(error);
+      
+  }
+}
+
 const getBooking = async (req, res) => {
     try {
  const {userId} = req.params
@@ -92,4 +105,4 @@ const updateStatus = async (req, res) => {
     }
   };
   
-module.exports = {updateStatus,deleteBooking,getBookingById,getBooking,booking}
+module.exports = {updateStatus,getAllBooking,deleteBooking,getBookingById,getBooking,booking}

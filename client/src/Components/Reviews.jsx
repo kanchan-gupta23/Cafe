@@ -206,24 +206,28 @@ function Reviews({ id }) {
                   <p className="font-semibold">
                     {r.user?.fullName || "Guest"}:
                   </p>
-                  {user._id === r.user?._id ? (
-                    <>
-                      <FaEdit
-                        onClick={() => {
-                          setEditReviewId(r._id);
-                          setUpdate({ review: r.review || "", file: "" });
-                        }}
-                      />
+                  <div className="flex gap-10">
+                    {user._id === r.user?._id ? (
+                      <>
+                        <FaEdit
+                          size={20}
+                          onClick={() => {
+                            setEditReviewId(r._id);
+                            setUpdate({ review: r.review || "", file: "" });
+                          }}
+                        />
 
-                      <MdDelete
-                        onClick={() => {
-                          deleteReview(r._id);
-                        }}
-                      />
-                    </>
-                  ) : (
-                    ""
-                  )}
+                        <MdDelete
+                          size={20}
+                          onClick={() => {
+                            deleteReview(r._id);
+                          }}
+                        />
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
 
                 {r._id === editReviewId ? (

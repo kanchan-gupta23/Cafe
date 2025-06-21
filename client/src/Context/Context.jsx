@@ -8,7 +8,7 @@ const ContextProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [admin, setAdmin] = useState([]);
   const [cartItem, setCartItem] = useState([]);
-  const [isAuthenticated, setAuthenticated] = useState(false);
+  const [isAuthenticated, setAuthenticated] = useState(null);
 
   const [cartQuantity, setCartQuantity] = useState({ quantity: "" });
 
@@ -32,7 +32,7 @@ const ContextProvider = ({ children }) => {
         return;
       }
       setToken("Bearer" + Token);
-      setAuthenticated(true);
+
       localStorage.setItem("New_Token", "Bearer" + Token);
     } catch (error) {
       console.log(error);
@@ -45,11 +45,11 @@ const ContextProvider = ({ children }) => {
         Authorization: Authentication,
       },
     });
+    setAuthenticated(true);
 
     setUser(response.data.user);
   };
 
-  console.log("user", import.meta.env.VITE_RAZORPAY_API_ID);
   const getProducts = async () => {
     try {
       const response = await axios.get(

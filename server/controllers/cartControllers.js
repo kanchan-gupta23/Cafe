@@ -2,82 +2,104 @@ const Cart = require("../models/CartSchema");
 const Product =  require("../models/productSchema")
 
 
-  const cart = async (req, res) => {
-    try {
-      const { user, products } = req.body;
+const cart = async (req, res) => {
+  try {
+    const { user, products } = req.body;
 
-      const validProducts = Array.isArray(products)
-        ? products.filter((item) => item && item._id)
-        : [];
+    if (!Array.isArray(products) || products.length === 0) {
+      return res.status(400).json({ msg: "No products provided" });
+    }
 
-      if (validProducts.length === 0) {
-        return res.status(400).json({ msg: "No valid products in request" });
-      }
+    // Filter valid product entries
+    const validProducts = products
+      .filter(item => item && item._id)  // Only include items with _id
+      .map(item => ({
+        _id: item._id,
+        quantity: Number.isInteger(item.quantity) && item.quantity > 0
+          ? item.quantity
+          : 1
+      }));
 
-      let cart = await Cart.findOne({ user });
+    if (validProducts.length === 0) {
+      return res.status(400).json({ msg: "No valid products in request" });
+    }
 
-      if (!cart) {
-        // Create new cart
-        const cartProducts = validProducts.map((item) => ({
-          product: item._id,
-          quantity: item.quantity || 1,
-        }));
+    let cart = await Cart.findOne({ user });
 
-        let totalAmount = 0;
+    if (!cart) {
+      // Create new cart
+      const cartProducts = validProducts.map(i => ({
+        product: i._id,
+        quantity: i.quantity
+      }));
 
-        for (const item of cartProducts) {
-          const productDoc = await Product.findById(item.product);
-          if (!productDoc) continue;
-          totalAmount += productDoc.price * item.quantity;
-        }
-
-        cart = await Cart.create({
-          user,
-          products: cartProducts,
-          totalAmount,
-          totalItems: cartProducts.length,
-        });
-
-        return res.status(200).json({ cart, msg: "Cart created successfully" });
-      }
-
-      // === Update existing cart ===
-      for (const newItem of validProducts) {
-        const existingItem = cart.products.find(
-          (p) => p.product.toString() === newItem._id
-        );
-
-        if (existingItem) {
-          existingItem.quantity += newItem.quantity || 1;
-        } else {
-          cart.products.push({
-            product: newItem._id,
-            quantity: newItem.quantity || 1,
-          });
-        }
-      }
-
-      // Recalculate totals
+      // Calculate total
       let totalAmount = 0;
-      for (const item of cart.products) {
+      for (const item of cartProducts) {
         const productDoc = await Product.findById(item.product);
         if (!productDoc) continue;
         totalAmount += productDoc.price * item.quantity;
       }
 
-      cart.totalAmount = totalAmount;
-      cart.totalItems = cart.products.length;
+      cart = await Cart.create({
+        user,
+        products: cartProducts,
+        totalAmount,
+        totalItems: cartProducts.length
+      });
 
-      await cart.save();
-
-      return res.status(200).json({ cart, msg: "Cart updated successfully" });
-
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ msg: "Internal Server Error" });
+      return res.status(201).json({ cart, msg: "Cart created successfully" });
     }
-  };
 
+    // Update existing cart
+    for (const newItem of validProducts) {
+      const existing = cart.products.find(p => p.product?.toString() === newItem._id);
+      if (existing) {
+        existing.quantity += newItem.quantity;
+      } else {
+        cart.products.push({
+          product: newItem._id,
+          quantity: newItem.quantity
+        });
+      }
+    }
+
+    // Remove invalid/null products
+    cart.products = cart.products.filter(p => p.product);
+
+    // Recalculate totals
+    let totalAmount = 0;
+    for (const item of cart.products) {
+      const productDoc = await Product.findById(item.product);
+      if (!productDoc) continue;
+      totalAmount += productDoc.price * item.quantity;
+    }
+
+    cart.totalAmount = totalAmount;
+    cart.totalItems = cart.products.length;
+
+    await cart.save();
+
+    res.status(200).json({ cart, msg: "Cart updated successfully" });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error, msg: "Internal Server Error" });
+  }
+};
+
+
+
+async function dropIndexes() {
+  try {
+    await Cart.collection.dropIndexes();
+    console.log('Indexes dropped successfully');
+  } catch (error) {
+    console.error('Error dropping indexes:', error);
+  }
+}
+
+dropIndexes();
   
 
 const getCart = async (req,res) => {

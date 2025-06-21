@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../Context/Context";
+import { MdDelete } from "react-icons/md";
 
-function GetOrder() {
-  const params = useParams();
+function GetAllOrder() {
   const { user, Authentication } = useContext(Context);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +13,7 @@ function GetOrder() {
   const fetchOrders = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/order/getOrder/${params.userId}`,
+        `http://localhost:3000/order/getAllOrder`,
         {
           headers: {
             Authorization: Authentication,
@@ -71,10 +71,21 @@ function GetOrder() {
       </p>
     );
 
+  const deleteOrder = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/order/deleteOrder/${id}`, {
+        headers: { Authorization: Authentication },
+      });
+      fetchOrders();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#f5f0eb] to-[#e6d4c1] p-8">
       <h1 className="text-4xl font-extrabold text-[#6b4f4f] mb-10 text-center">
-        Your Orders
+        All Orders
       </h1>
 
       <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -92,6 +103,10 @@ function GetOrder() {
                 Order #{idx + 1}
               </h2>
               <div className="flex gap-5 items-center">
+                <button onClick={() => deleteOrder(order._id)}>
+                  <MdDelete size={22} />
+                </button>
+
                 <button
                   onClick={() => cancelOrder(order.payment._id, order._id)}
                   disabled={
@@ -136,20 +151,27 @@ function GetOrder() {
                 day: "numeric",
               })}
             </p>
-
+            <p className="text-gray-700 mb-2">
+              <span className="font-medium">UserID:</span>{" "}
+              {order.user?._id || "—"}
+            </p>
+            <p className="text-gray-700 mb-2">
+              <span className="font-medium">UserName:</span>{" "}
+              {order.user?.fullName || "—"}
+            </p>
             <p className="text-[#6b4f4f] font-bold text-lg mt-4">
               Total: ₹{order.totalAmount || order.total || "0"}
             </p>
 
             <p
               className={`mt-2 font-semibold ${
-                order.status === "completed"
+                order.status === "confirmed"
                   ? "text-green-600"
                   : order.status === "pending"
                   ? "text-yellow-600"
                   : order.status === "cancel"
-                  ? "text-gray-600"
-                  : "text-red-600"
+                  ? "text-red-600"
+                  : "text-gray-600"
               }`}
             >
               Status: {order.status || "Unknown"}
@@ -161,4 +183,4 @@ function GetOrder() {
   );
 }
 
-export default GetOrder;
+export default GetAllOrder;

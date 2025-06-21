@@ -4,7 +4,7 @@ import { FaShoppingCart, FaUserAlt } from "react-icons/fa";
 import { Context } from "../Context/Context";
 
 const Navbar = () => {
-  const { user, cartItem } = useContext(Context);
+  const { user, cartItem, isAuthenticated } = useContext(Context);
   const { userId } = useParams();
 
   return (
@@ -23,12 +23,14 @@ const Navbar = () => {
           Home
         </Link>
 
-        <Link
-          to="/userRegistration"
-          className="hover:text-yellow-300 transition-colors duration-200"
-        >
-          Registration
-        </Link>
+        {!isAuthenticated && (
+          <Link
+            to="/userRegistration"
+            className="hover:text-yellow-300 transition-colors duration-200"
+          >
+            Registration
+          </Link>
+        )}
 
         <Link
           to="/menu"
@@ -57,13 +59,31 @@ const Navbar = () => {
         >
           Booking
         </Link>
+        {user.isAdmin !== false && (
+          <Link
+            to="/allbookings"
+            className="hover:text-yellow-300 transition-colors duration-200"
+          >
+            All Bookings
+          </Link>
+        )}
+
         <Link
           to={`/mybooking/${user._id}`}
           className="hover:text-yellow-300 transition-colors duration-200"
         >
           My Booking
         </Link>
+
         <Link to={`/allOrder/${user._id}`}>Order</Link>
+        {user.isAdmin !== false && (
+          <Link
+            to="/getallOrder"
+            className="hover:text-yellow-300 transition-colors duration-200"
+          >
+            All Order
+          </Link>
+        )}
 
         {/* Cart Icon */}
         <Link to={`/cart/${user._id}`} className="relative">

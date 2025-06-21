@@ -108,7 +108,7 @@ function Booking() {
             const paymentId = paymentResponse.data._id;
 
             alert("Booking Successful!");
-            navigate(`/mybookings/${user._id}`);
+            navigate(`/mybooking/${user._id}`);
           } catch (error) {
             console.error("❌ Payment verification failed:", error);
           }

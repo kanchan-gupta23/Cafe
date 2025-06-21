@@ -58,7 +58,7 @@ function About() {
           className="flex flex-col md:flex-row gap-10 items-center"
         >
           <img
-            src="https://lh3.googleusercontent.com/a/ACg8ocLT2Ruq643KqDzZ5EE1h_0JeCn98lKRTco_6ulgNziNWkDZmWAQ=s360-c-no"
+            src="https://media.licdn.com/dms/image/v2/D4E03AQFWmBtXtvunaw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1732349043419?e=1754524800&v=beta&t=EVa3pDfYbS6lMN-T4k49YluGHPHlbI-p8xMYMzIeiy8"
             alt="Kanchan"
             className="w-64 h-64 object-cover rounded-full border-4 border-[#d7a86e] shadow-lg"
           />

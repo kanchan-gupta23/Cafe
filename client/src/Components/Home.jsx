@@ -29,7 +29,7 @@ const Home = () => {
     {
       image:
         "https://royceindia.com/cdn/shop/files/AromachocolatePlate.webp?v=1706515551&width=1080",
-      category: "Ready to eat",
+      category: "ReadyToEat",
     },
   ];
 
@@ -72,9 +72,11 @@ const Home = () => {
             Savor the aroma, taste the love. A place to relax, work, or meet up
             with friends over the perfect cup of coffee.
           </p>
-          <button className="px-6 py-3 bg-yellow-300/80 text-black font-semibold rounded-lg hover:bg-yellow-400 transition">
-            Explore Menu
-          </button>
+          <Link to={`/menu`}>
+            <button className="px-6 py-3 bg-yellow-300/80 text-black font-semibold rounded-lg hover:bg-yellow-400 transition">
+              Explore Menu
+            </button>
+          </Link>
         </div>
       </section>
 

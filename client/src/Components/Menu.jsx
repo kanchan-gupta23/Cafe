@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Context } from "../Context/Context";
 import Card from "./Card";
+import Navbar from "./Nvbar";
 
 function Menu() {
   const [allProducts, setAllProducts] = useState([]);
@@ -11,7 +12,7 @@ function Menu() {
 
   const { Authentication } = useContext(Context);
 
-  const categories = ["All", "Bestseller", "Drinks", "Food", "Ready to eat"];
+  const categories = ["All", "Bestseller", "Drinks", "Food", "ReadyToEat"];
 
   const getAllProducts = async () => {
     try {

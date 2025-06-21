@@ -2,8 +2,9 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { FaCoffee } from "react-icons/fa";
 import { Context } from "../Context/Context";
-
+import { useNavigate } from "react-router-dom";
 function Login() {
+  const navigate = useNavigate();
   const { getToken } = useContext(Context);
   const [value, setValue] = useState({
     email: "",
@@ -26,6 +27,7 @@ function Login() {
         value
       );
       getToken(response.data.token);
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

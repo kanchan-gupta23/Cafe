@@ -103,10 +103,10 @@ function Cart() {
                 >
                   <div className="flex-1">
                     <h2 className="text-xl font-semibold">
-                      {i.product.productName}
+                      {i.product?.productName}
                     </h2>
                     <div className="flex items-center gap-2 mt-2">
-                      <label htmlFor={`qty-${i.product.productName}`}>
+                      <label htmlFor={`qty-${i.product?.productName}`}>
                         Qty:
                       </label>
                       <select
