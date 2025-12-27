@@ -9,7 +9,7 @@ const uploadCloundinary =  async (files=[]) => {
         
     }
     const uploadpromise = await files.map((file)=>{
-return new Promise((resolve,rejects)=>{
+return new Promise((resolve,reject)=>{
 if (!file.buffer) {
   return reject("Audio buffer is undefined");
 
