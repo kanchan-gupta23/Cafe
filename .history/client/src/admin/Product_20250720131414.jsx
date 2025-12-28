@@ -1,12 +1,11 @@
+import React, { useContext, useState } from "react";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../Context/Context";
+import { useNavigate } from "react-router-dom";
 
-function UpdateProduct() {
-  const navigate = useNavigate();
+function Product() {
   const { Authentication } = useContext(Context);
-  const params = useParams();
+  const navigate = useNavigate();
   const [value, setValue] = useState({
     productName: "",
     category: "",
@@ -15,7 +14,7 @@ function UpdateProduct() {
     description: "",
   });
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     const file = e.target.files?.[0];
     const name = e.target.name;
     const inputValue = name === "file" ? file : e.target.value;
@@ -36,45 +35,22 @@ function UpdateProduct() {
     formData.append("description", value.description);
 
     try {
-      const response = await axios.put(
-        `https://cafe-5-07vf.onrender.com/product/updateProduct/${params.id}`,
+      const response = await axios.post(
+        `http://localhost:3000/product/createProduct`,
         formData,
         {
-          headers: {
-            Authorization: Authentication,
-          },
+          headers: { Authorization: Authentication },
         }
       );
       console.log(response.data);
-      alert("product updated successfully");
-      navigate(-1);
+      alert("Product created successfully!");
+      navigate("/");
     } catch (error) {
       console.log(error);
+      alert("Failed to create product.");
     }
   };
 
-  const getProductById = async () => {
-    const response = await axios.get(
-      `http://localhost:3000/product/getProductById/${params.id}`,
-      {
-        headers: {
-          Authorization: Authentication,
-        },
-      }
-    );
-    const product = response.data;
-
-    setValue({
-      productName: product.productName || "",
-      category: product.category || "",
-      price: product.price || "",
-      file: null, // File can't be set from the backend
-      description: product.description || "",
-    });
-  };
-  useEffect(() => {
-    getProductById();
-  }, []);
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-100 to-blue-100 p-6">
       <form
@@ -173,4 +149,4 @@ function UpdateProduct() {
   );
 }
 
-export default UpdateProduct;
+export default Product;

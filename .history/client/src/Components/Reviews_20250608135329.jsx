@@ -54,7 +54,7 @@ function Reviews({ id }) {
 
     try {
       await axios.post(
-        `https://cafe-5-07vf.onrender.com/reviews/reviews/${id}`,
+        `http://localhost:3000/reviews/reviews/${id}`,
         formData,
         {
           headers: {
@@ -72,7 +72,7 @@ function Reviews({ id }) {
 
   const getReviews = async () => {
     const response = await axios.get(
-      `https://cafe-5-07vf.onrender.com/reviews/getReviewsById/${id}`,
+      `http://localhost:3000/reviews/getReviewsById/${id}`,
       {
         headers: {
           Authorization: Authentication,
@@ -91,7 +91,7 @@ function Reviews({ id }) {
       formData.append("review", update.review);
       formData.append("product", id);
       const response = await axios.put(
-        `https://cafe-5-07vf.onrender.com/reviews/updateReviewsById/${reviewId}`,
+        `http://localhost:3000/reviews/updateReviewsById/${reviewId}`,
         formData,
         {
           headers: {
@@ -111,7 +111,7 @@ function Reviews({ id }) {
 
   const deleteReview = async (id) => {
     const response = await axios.delete(
-      `https://cafe-5-07vf.onrender.com/reviews/deleteReviews/${id}`,
+      `http://localhost:3000/reviews/deleteReviews/${id}`,
       {
         headers: {
           Authorization: Authentication,

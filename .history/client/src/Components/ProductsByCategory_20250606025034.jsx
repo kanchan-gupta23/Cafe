@@ -11,7 +11,7 @@ function ProductsByCategory() {
   const getProductByCategory = async () => {
     try {
       const response = await axios.get(
-        `https://cafe-5-07vf.onrender.com/product/getProductByCategory/${params.category}`,
+        `http://localhost:3000/product/getProductByCategory/${params.category}`,
         {
           headers: {
             Authorization: Authentication,

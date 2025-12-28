@@ -17,14 +17,11 @@ const ContextProvider = ({ children }) => {
   const Authentication = token;
 
   const getAdmin = async () => {
-    const response = await axios.get(
-      `https://cafe-5-07vf.onrender.com/user/getAdmin`,
-      {
-        headers: {
-          Authorization: Authentication,
-        },
-      }
-    );
+    const response = await axios.get(`http://localhost:3000/user/getAdmin`, {
+      headers: {
+        Authorization: Authentication,
+      },
+    });
     setAdmin(response.data);
   };
 
@@ -43,14 +40,11 @@ const ContextProvider = ({ children }) => {
   };
 
   const getUser = async () => {
-    const response = await axios.get(
-      "https://cafe-5-07vf.onrender.com/user/getUser",
-      {
-        headers: {
-          Authorization: Authentication,
-        },
-      }
-    );
+    const response = await axios.get("http://localhost:3000/user/getUser", {
+      headers: {
+        Authorization: Authentication,
+      },
+    });
     setAuthenticated(true);
 
     setUser(response.data.user);
@@ -59,7 +53,7 @@ const ContextProvider = ({ children }) => {
   const getProducts = async () => {
     try {
       const response = await axios.get(
-        "https://cafe-5-07vf.onrender.com/product/getAlltProducts",
+        "http://localhost:3000/product/getAlltProducts",
         {
           headers: {
             Authorization: Authentication,

@@ -13,7 +13,7 @@ function ProductById() {
   const getProduct = async () => {
     try {
       const response = await axios.get(
-        `https://cafe-5-07vf.onrender.com/product/getProductById/${id}`,
+        `http://localhost:3000/product/getProductById/${id}`,
         {
           headers: {
             Authorization: Authentication,

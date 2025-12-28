@@ -14,7 +14,7 @@ function MyBookings() {
   const getBooking = async () => {
     try {
       const response = await axios.get(
-        `https://cafe-5-07vf.onrender.com/booking/getBooking/${Params.userId}`,
+        `http://localhost:3000/booking/getBooking/${Params.userId}`,
         {
           headers: { Authorization: Authentication },
         }
@@ -33,7 +33,7 @@ function MyBookings() {
   const cancelBooking = async (id) => {
     try {
       await axios.put(
-        `https://cafe-5-07vf.onrender.com/booking/updateStatus/${id}`,
+        `http://localhost:3000/booking/updateStatus/${id}`,
         {},
         {
           headers: { Authorization: Authentication },

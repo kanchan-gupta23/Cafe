@@ -48,7 +48,7 @@ function Booking() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `https://cafe-5-07vf.onrender.com/payment/createRazorOrder`,
+        `http://localhost:3000/payment/createRazorOrder`,
         { amount: value.totalAmount }
       );
 
@@ -62,7 +62,7 @@ function Booking() {
       }
 
       const postBooking = await axios.post(
-        `https://cafe-5-07vf.onrender.com/booking/booking/${params.userId}`,
+        `http://localhost:3000/booking/booking/${params.userId}`,
         value,
         {
           headers: {
@@ -86,7 +86,7 @@ function Booking() {
         handler: async function (response) {
           try {
             await axios.post(
-              `https://cafe-5-07vf.onrender.com/payment/paymentVerification/${params.userId}`,
+              `http://localhost:3000/payment/paymentVerification/${params.userId}`,
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -97,7 +97,7 @@ function Booking() {
 
             // Retrieve payment ID
             const paymentResponse = await axios.post(
-              `https://cafe-5-07vf.onrender.com/payment/getPayment`,
+              `http://localhost:3000/payment/getPayment`,
               { booking: createdBooking.booking._id },
               {
                 headers: {

@@ -17,7 +17,7 @@ function Menu() {
   const getAllProducts = async () => {
     try {
       const response = await axios.get(
-        `https://cafe-5-07vf.onrender.com/product/getAlltProducts`,
+        `http://localhost:3000/product/getAlltProducts`,
         {
           headers: {
             Authorization: Authentication,

@@ -15,7 +15,7 @@ function Order() {
   const getCart = async () => {
     try {
       const response = await axios.get(
-        `https://cafe-5-07vf.onrender.com/cart/getCart/${user._id}`,
+        `http://localhost:3000/cart/getCart/${user._id}`,
         {
           headers: {
             Authorization: Authentication,
@@ -32,7 +32,7 @@ function Order() {
   const postOrder = async (orderData) => {
     try {
       await axios.post(
-        `https://cafe-5-07vf.onrender.com/order/order/${params.userId}`,
+        `http://localhost:3000/order/order/${params.userId}`,
         orderData,
         {
           headers: {
@@ -56,7 +56,7 @@ function Order() {
       );
 
       const response = await axios.post(
-        `https://cafe-5-07vf.onrender.com/payment/createRazorOrder`,
+        `http://localhost:3000/payment/createRazorOrder`,
         { amount: totalAmount }
       );
 
@@ -72,7 +72,7 @@ function Order() {
         handler: async function (response) {
           try {
             await axios.post(
-              `https://cafe-5-07vf.onrender.com/payment/paymentVerification/${params.userId}`,
+              `http://localhost:3000/payment/paymentVerification/${params.userId}`,
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -83,7 +83,7 @@ function Order() {
 
             // Retrieve payment ID
             const paymentResponse = await axios.post(
-              `https://cafe-5-07vf.onrender.com/payment/getPayment`,
+              `http://localhost:3000/payment/getPayment`,
               { cart: cartItems.map((item) => item._id) },
               {
                 headers: {

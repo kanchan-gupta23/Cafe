@@ -11,7 +11,7 @@ function Card({ id, url, name, description, price, onDelete }) {
   const deleteProduct = async () => {
     try {
       const res = await axios.delete(
-        `https://cafe-5-07vf.onrender.com/product/deleteProduct/${id}`,
+        `http://localhost:3000/product/deleteProduct/${id}`,
         {
           headers: {
             Authorization: Authentication,
@@ -27,7 +27,7 @@ function Card({ id, url, name, description, price, onDelete }) {
   const addToCart = async () => {
     try {
       await axios.post(
-        `https://cafe-5-07vf.onrender.com/cart/cart`,
+        `http://localhost:3000/cart/cart`,
         {
           user: user._id,
           products: [{ _id: id }, { quantity: 1 }],

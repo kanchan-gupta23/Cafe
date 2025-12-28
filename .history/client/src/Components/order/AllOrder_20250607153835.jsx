@@ -13,7 +13,7 @@ function GetAllOrder() {
   const fetchOrders = async () => {
     try {
       const response = await axios.get(
-        `https://cafe-5-07vf.onrender.com/order/getAllOrder`,
+        `http://localhost:3000/order/getAllOrder`,
         {
           headers: {
             Authorization: Authentication,
@@ -37,7 +37,7 @@ function GetAllOrder() {
     try {
       setCancellingOrderId(orderId);
       await axios.put(
-        `https://cafe-5-07vf.onrender.com/order/updateStatus/${orderId}`,
+        `http://localhost:3000/order/updateStatus/${orderId}`,
         { paymentId },
         {
           headers: {
@@ -73,7 +73,7 @@ function GetAllOrder() {
 
   const deleteOrder = async (id) => {
     try {
-      await axios.delete(`https://cafe-5-07vf.onrender.com/order/deleteOrder/${id}`, {
+      await axios.delete(`http://localhost:3000/order/deleteOrder/${id}`, {
         headers: { Authorization: Authentication },
       });
       fetchOrders();

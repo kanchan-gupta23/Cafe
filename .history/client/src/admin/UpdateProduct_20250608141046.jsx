@@ -37,7 +37,7 @@ function UpdateProduct() {
 
     try {
       const response = await axios.put(
-        `https://cafe-5-07vf.onrender.com/product/updateProduct/${params.id}`,
+        `http://localhost:3000/product/updateProduct/${params.id}`,
         formData,
         {
           headers: {

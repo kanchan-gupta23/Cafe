@@ -11,7 +11,7 @@ function Admin() {
     e.preventDefault(); // prevent page refresh
     try {
       const response = await axios.put(
-        `https://cafe-5-07vf.onrender.com/user/admin/${user._id}`,
+        `http://localhost:3000/user/admin/${user._id}`,
         {},
         {
           headers: {

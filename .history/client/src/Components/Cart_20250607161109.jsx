@@ -29,7 +29,7 @@ function Cart() {
   const getCart = async () => {
     try {
       const response = await axios.get(
-        `https://cafe-5-07vf.onrender.com/cart/getCart/${userId}`,
+        `http://localhost:3000/cart/getCart/${userId}`,
 
         {
           headers: {
@@ -50,7 +50,7 @@ function Cart() {
 
   const updateQuantity = async (productId, quantity) => {
     const response = await axios.put(
-      `https://cafe-5-07vf.onrender.com/cart/updatedQuantity/${userId}`,
+      `http://localhost:3000/cart/updatedQuantity/${userId}`,
       {
         productId,
         quantity: Number(quantity),
@@ -67,7 +67,7 @@ function Cart() {
 
   const delCartProduct = async (productId) => {
     const response = await axios.put(
-      `https://cafe-5-07vf.onrender.com/cart/deleteCart/${userId}`,
+      `http://localhost:3000/cart/deleteCart/${userId}`,
       {
         productId,
       },

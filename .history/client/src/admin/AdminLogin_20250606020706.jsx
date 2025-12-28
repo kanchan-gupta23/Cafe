@@ -24,7 +24,7 @@ function AdminLogin() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `https://cafe-5-07vf.onrender.com/user/adminLogin`,
+        `http://localhost:3000/user/adminLogin`,
         value,
         {
           headers: {

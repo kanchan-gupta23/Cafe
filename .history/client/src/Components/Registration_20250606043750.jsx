@@ -45,7 +45,7 @@ function Registration() {
 
     try {
       const response = await axios.post(
-        `https://cafe-5-07vf.onrender.com/user/userRegistration`,
+        `http://localhost:3000/user/userRegistration`,
         formData,
         {
           headers: {
